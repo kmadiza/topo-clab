@@ -53,14 +53,21 @@ topology:
     INFLUXDB_USER: gnmic
     INFLUXDB_USER_PASSWORD: gnmic
     
-
   telegraf:
-   kind: linux
-   image: telegraf:latest
-   binds: 
-    - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-   ports:
-   - 57000:57000
+    kind: linux
+    image: telegraf:latest
+    certificate:
+     issue: true
+    ports:
+     - 9273:9273
+    binds:
+     - ./telegraf/:/etc/telegraf/
+     - ./clab-srl/.tls/ca/:/etc/telegraf/ssl-ca
+     - ./clab-srl/.tls/telegraf/:/etc/telegraf/ssl-cert
+    cmd: '-config /etc/telegraf/telegraf.conf $TELEGRAF_OPTS'
+
+
+
 
  links:
   - endpoints: ["R1:e1-1", "R2:e1-1"]
