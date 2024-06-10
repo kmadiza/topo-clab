@@ -13,6 +13,14 @@ interface ethernet-1/2 {
    address 10.10.14.2/30 {
    } } } }
 
+interface ethernet-1/3 {
+ admin-state enable
+ subinterface 0 {
+  ipv4 {
+   admin-state enable
+   address 10.10.44.1/24 {
+   } } } }
+
 interface system0 {
  admin-state enable
  subinterface 0 {
@@ -26,6 +34,8 @@ interface system0 {
   interface ethernet-1/1.0 {
   }
   interface ethernet-1/2.0 {
+  }
+  interface ethernet-1/3.0 {
   }
   interface system0.0 {
   }
