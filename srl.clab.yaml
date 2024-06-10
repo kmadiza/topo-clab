@@ -21,7 +21,39 @@ topology:
    kind: nokia_srlinux
    image: ghcr.io/nokia/srlinux 
 
+    
+  H1:
+   kind: linux
+   image: vpc:latest
+   memory: 10m
+   exec:
+    - ip addr add 10.10.11.2/24 dev eth1
+    - ip route replace 0/0 via 10.10.11.1
   
+  H2:
+   kind: linux
+   image: vpc:latest
+   memory: 10m
+   exec:
+    - ip addr add 10.10.22.2/24 dev eth1
+    - ip route replace 0/0 via 10.10.22.1
+    
+  H3:
+   kind: linux
+   image: vpc:latest
+   memory: 10m
+   exec:
+    - ip addr add 10.10.33.2/24 dev eth1
+    - ip route replace 0/0 via 10.10.33.1
+
+  H4:
+   kind: linux
+   image: vpc:latest
+   memory: 10m
+   exec:
+    - ip addr add 10.10.33.2/24 dev eth1
+    - ip route replace 0/0 via 10.10.33.1
+     
   #gnmic:
    #kind: linux
    #image: ghcr.io/openconfig/gnmic
@@ -74,5 +106,9 @@ topology:
   - endpoints: ["R2:e1-2", "R3:e1-1"]
   - endpoints: ["R3:e1-2", "R4:e1-1"]
   - endpoints: ["R4:e1-2", "R1:e1-2"]
+  - endpoints: ["H1:eth1", "R1:e1-3"]
+  - endpoints: ["H2:eth1", "R2:e1-3"]
+  - endpoints: ["H3:eth1", "R3:e1-3"]
+  - endpoints: ["H4:eth1", "R4:e1-3"]
  
 
