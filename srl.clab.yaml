@@ -20,8 +20,7 @@ topology:
   R4:
    kind: nokia_srlinux
    image: ghcr.io/nokia/srlinux 
-
-    
+   
   H1:
    kind: linux
    image: vpc:latest
@@ -51,9 +50,11 @@ topology:
    image: vpc:latest
    memory: 10m
    exec:
-    - ip addr add 10.10.33.2/24 dev eth1
-    - ip route replace 0/0 via 10.10.33.1
-     
+    - ip addr add 10.10.44.2/24 dev eth1
+    - ip route replace 0/0 via 10.10.44.1
+    
+
+  
   #gnmic:
    #kind: linux
    #image: ghcr.io/openconfig/gnmic
@@ -86,18 +87,17 @@ topology:
     INFLUXDB_USER_PASSWORD: gnmic
     
   telegraf:
-    kind: linux
-    image: telegraf:latest
-    certificate:
-     issue: true
-    ports:
-     - 9273:9273
-    binds:
-     - ./telegraf/:/etc/telegraf/
-     - ./clab-srl/.tls/ca/:/etc/telegraf/ssl-ca
-     - ./clab-srl/.tls/telegraf/:/etc/telegraf/ssl-cert
-    cmd: '-config /etc/telegraf/telegraf.conf $TELEGRAF_OPTS'
-
+   kind: linux
+   image: telegraf:latest
+   certificate:
+    issue: true
+   ports:
+    - 9273:9273
+   binds:
+    - ./telegraf/:/etc/telegraf/
+    - ./clab-srl/.tls/ca/:/etc/telegraf/ssl-ca
+    - ./clab-srl/.tls/telegraf/:/etc/telegraf/ssl-cert
+   cmd: '-config /etc/telegraf/telegraf.conf $TELEGRAF_OPTS'
 
 
 
@@ -111,4 +111,3 @@ topology:
   - endpoints: ["H3:eth1", "R3:e1-3"]
   - endpoints: ["H4:eth1", "R4:e1-3"]
  
-
